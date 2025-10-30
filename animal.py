@@ -37,19 +37,27 @@ class HealthRecord:
     # using @property decorator to transform a method into a getter
     @property
     def description(self):
+        # short description of what the health issue or disease or condition is
         return self.__description
 
     @property
     def report_on(self):
+       # date of when the issue was reported
         return self.__reported_on
 
     @property
     def severity(self):
+        # score of severity from 1 (mild) to 10 (critical)
         return self.__severity
 
     @property
     def treatment_notes(self):
+        # notes about the treatment or follow up, could be empty if not severe
         return self.__treatment_notes
+
+    # represents a string for debugging and tests
+    def __repr__(self):
+        return f"HealthRecord({self.__reported_on.isoformat()},sev={self.__severity}, desc={self.__description})"
 
 class Animal:
     def __init__(self, name, species, age, diet):
