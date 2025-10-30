@@ -63,9 +63,29 @@ class Animal:
     def __init__(self, name, species, age, diet):
         """
         Initialise an Animal object with name, species, age and dietary attributes.
+        Validation init to keep checks centralised
+        Using list for an internal history list
+        Boolean used to determine whether the animal is undergoing treatment
         """
         self.__validate_init(name, species, age, diet)
         self.__name = name
         self.__species = species
         self.__age = age
         self.__diet = diet
+        self.__health_records: List[HealthRecord] = []
+        self.__under_treatment = False
+
+    def __validate_init(self, name, species, age, diet):
+        """
+        Internal validator to ensure that what is entered is actually what should be entered.
+        Completes internal checks.
+        """
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Name cannot be an empty string.")
+        if not isinstance(species, str) or not species.strip():
+            raise ValueError("species cannot be an empty string.")
+        if not isinstance(age, int) or age < 0:
+            raise ValueError("Age cannot be a negative integer")
+        if not isinstance(diet, str) or not diet.strip():
+            raise ValueError("Diet cannot be an empty string.")
+
