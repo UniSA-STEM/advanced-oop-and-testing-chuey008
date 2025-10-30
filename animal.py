@@ -69,7 +69,7 @@ class Animal:
         """
         self.__validate_init(name, species, age, diet)
         self.__name = name
-        self.__species = species
+        self.__species = species.lower()
         self.__age = age
         self.__diet = diet
         self.__health_records: List[HealthRecord] = []
@@ -88,4 +88,32 @@ class Animal:
             raise ValueError("Age cannot be a negative integer")
         if not isinstance(diet, str) or not diet.strip():
             raise ValueError("Diet cannot be an empty string.")
+
+    # using @property decorator to transform a method into a getter
+    @property
+    def name(self):
+        # name of the animal
+        return self.__name
+
+    @property
+    def species(self):
+        # the species type of the animal in lower case
+        return self.__species
+
+    @property
+    def age(self):
+        # how old the animal is in years
+        return self.__age
+
+    @property
+    def diet(self):
+        # what does the animal eat
+        return self.__diet
+
+    @property
+    def under_treatment(self):
+        # indicates if the animal is undergoing treatment, flagged in their health records with how severe
+        # can be cleared by calling clear_treatment
+        return self.__under_treatment
+
 
