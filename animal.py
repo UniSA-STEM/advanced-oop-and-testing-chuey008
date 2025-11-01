@@ -116,4 +116,30 @@ class Animal:
         # can be cleared by calling clear_treatment
         return self.__under_treatment
 
+    def make_sound(self):
+        """
+        Default sound method for testing.
+        Subclasses would be able to override this method
+        Keeping it public to let other components call it without accessing internal state
+        """
+        return f"{self.__name} th {self.__species} makes a sound"
+
+    def eat(self, food: str):
+        """
+        This will simulate feeding the animal.
+        This will need to be a string, cannot be empty.
+        Will return a descriptive string for tests.
+        """
+        if not isinstance(food, str) or not food.strip():
+            raise ValueError("Food cannot be an empty string.")
+        return f"{self.__name} eats {food.strip()} - diet contains: {self.__diet}"
+
+    def sleep(self, hours: int = 8):
+        """
+        This will simulate the animal sleeping.
+        Checks to see if the hours are greater than zero.
+        """
+        if not isinstance(hours, int) or hours <= 0:
+            raise ValueError("Hours must be greater than zero.")
+        return f"{self.__name} sleeps for {hours} hours."
 
