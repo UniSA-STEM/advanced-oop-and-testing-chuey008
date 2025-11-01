@@ -143,3 +143,47 @@ class Animal:
             raise ValueError("Hours must be greater than zero.")
         return f"{self.__name} sleeps for {hours} hours."
 
+    def add_health_record(self, record: HealthRecord):
+        """
+        Public method to add a HealthRecord to the animal.
+        Only accepts HealthRecord objects/instances.
+        Delegates to a private helper to update the internal state.
+        """
+        if not isinstance(record, HealthRecord):
+            raise TypeError("Record must be a HealthRecord instance.")
+        self.__add_health_record_private(record)
+
+    def __add_health_record_private(self, record: HealthRecord):
+        """
+        Private helper to store the health record and update the treatment flag.
+        For any animal that has a severity of greater than 5 will undergo treatment.
+        All records will still be saved and stored after it is cleared.
+        """
+        self.__health_records.append(record)
+        if record.severity >= 5
+            self.__under_treatment = True
+
+    def get_health_records(self):
+        """
+        Returns a shallow copy of health records to prevent any changes.
+        Will be used for testing as the internal list can't be changed.
+        """
+        return list(self.__health_records)
+
+    def clear_treatment(self):
+        """
+        This will clear the animal after they have received treatment.
+        Health records will still be saved to make sure the animal is recovering
+        """
+        self.__under_treatment = False
+
+    def __str__(self):
+        """
+        A summary of the animal on their health for testing and showcasing output.
+        """
+        status = "Undergoing treatment" if self.__under_treatment else "Healthy"
+        return (f"{self.__name} is part of {self.__species}"
+                f"Age: {self.__age}"
+                f"Diet: {self.__diet}"
+                f"Health: {status}")
+
