@@ -34,3 +34,16 @@ class Staff:
         if role not in ("Veterinarian", "Zookeeper"):
             raise ValueError("Role must be either 'Veterinarian' or 'Zookeeper'.")
 
+    # using @property decorator to transform a method into a getter
+    def staff_id(self):
+        # public staff identifier
+        return self.__staff_id
+
+    def name(self):
+        # public name identifier
+        return self.__name
+
+    def role(self):
+        # public role identifier
+        return self.__role
+
