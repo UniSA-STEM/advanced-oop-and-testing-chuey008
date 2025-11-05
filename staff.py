@@ -34,6 +34,7 @@ class Staff:
         if role not in ("Veterinarian", "Zookeeper"):
             raise ValueError("Role must be either 'Veterinarian' or 'Zookeeper'.")
 
+    # --------------------------- Public Properties ---------------------------
     # using @property decorator to transform a method into a getter
     def staff_id(self):
         # public staff identifier
@@ -46,4 +47,26 @@ class Staff:
     def role(self):
         # public role identifier
         return self.__role
+
+    # --------------------------- Assignment Helpers ---------------------------
+    def assign_animal(self, animal):
+        """
+        This will assign an animal to the staff member.
+        Method stores the animal's name only, this is to avoid duplicating object references.
+        Checks to see if what is chosen is an actual animal.
+        """
+        if not isinstance(animal, Animal):
+            raise TypeError("animal must be an Animal instance.")
+        if animal.name not in self.__assigned_animals:
+            self.__assigned_animals.append(animal.name)
+
+    def assign_enclosure(self, enclosure_name):
+        """
+        This will assign an enclosure to the staff member.
+        Checks to see if what is chosen is an actual enclosure, needs to be a string and not empty.
+        """
+        if not isinstance(enclosure_name, str) or not enclosure_name.strip():
+            raise ValueError("enclosure_name cannot be an empty string.")
+        if enclosure_name not in self.__assigned_enclosures:
+            self.__assigned_enclosures.append(enclosure_name.strip())
 
