@@ -28,3 +28,19 @@ class Enclosure:
         self.__capacity = capacity
         self.__animals: List[Animal]=[]
         self.__cleanliness = 100  # start fully clean
+
+    # --------------------------- Private Helpers ---------------------------
+    def __validate_init(self, name, size_sqm, environment, capacity):
+        """
+        Internal validator to ensure that what is entered is actually what should be entered.
+        Completes internal checks.
+        """
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("name cannot be an empty string.")
+        if not isinstance(size_sqm, int) or size_sqm < 0:
+            raise ValueError("size_sqm must be a positive integer")
+        if not isinstance(environment, str):  # will need to find a way to check for environment type
+            raise
+        if not isinstance(capacity, int) or capacity <= 0:
+            raise ValueError("capacity must be a positive integer")
+
