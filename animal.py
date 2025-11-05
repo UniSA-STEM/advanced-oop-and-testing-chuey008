@@ -15,7 +15,7 @@ from typing import List
 class HealthRecord:
     def __init__(self, description, reported_on, severity, treatment_notes):
         """
-        Represents a health record in an animal if there is an event.
+        This class represents a health record in an animal if there is an event.
         All are private to enforce encapsulation and checks to see the validity of HealthRecords to prevent invalid
         records from being entered.
         """
@@ -55,8 +55,8 @@ class HealthRecord:
         # notes about the treatment or follow up, could be empty if not severe
         return self.__treatment_notes
 
-    # represents a string for debugging and tests
     def __repr__(self):
+        # represents a string for debugging and tests
         return f"HealthRecord({self.__reported_on.isoformat()},sev={self.__severity}, desc={self.__description})"
 
 class Animal:
@@ -75,6 +75,7 @@ class Animal:
         self.__health_records: List[HealthRecord] = []
         self.__under_treatment = False
 
+    # --------------------------- Private Helpers ---------------------------
     def __validate_init(self, name, species, age, diet):
         """
         Internal validator to ensure that what is entered is actually what should be entered.
@@ -89,7 +90,10 @@ class Animal:
         if not isinstance(diet, str) or not diet.strip():
             raise ValueError("Diet cannot be an empty string.")
 
-    # using @property decorator to transform a method into a getter
+    # --------------------------- Public Properties ---------------------------
+    """
+    using @property decorator to transform a method into a getter
+    """
     @property
     def name(self):
         # name of the animal
@@ -116,6 +120,7 @@ class Animal:
         # can be cleared by calling clear_treatment
         return self.__under_treatment
 
+    # --------------------------- Behaviour Methods ---------------------------
     def make_sound(self):
         """
         Default sound method for testing.
@@ -143,6 +148,7 @@ class Animal:
             raise ValueError("Hours must be greater than zero.")
         return f"{self.__name} sleeps for {hours} hours."
 
+    # --------------------------- Health Management ---------------------------
     def add_health_record(self, record: HealthRecord):
         """
         Public method to add a HealthRecord to the animal.
@@ -187,3 +193,27 @@ class Animal:
                 f"Diet: {self.__diet}"
                 f"Health: {status}")
 
+# --------------------------- Animal Subclasses ---------------------------
+class Mammal(Animal):
+    def make_sound(self):
+        """
+        Mammal subclass of parent class that inherits from Animal.
+        This will override make_sound method, which shows basic polymorphism.
+        """
+        return f"{self.__name} the {self.__species} makes a typical mammal sound."
+
+class Reptile(Animal):
+    def make_sound(self):
+        """
+        Reptile subclass of parent class that inherits from Animal.
+        This will override make_sound method, which shows basic polymorphism.
+        """
+        return f"{self.__name} the {self.__species} makes a typical reptile sound."
+
+class Birds(Animal):
+    def make_sound(self):
+        """
+        Birds subclass of parent class that inherits from Animal.
+        This will override make_sound method, which shows basic polymorphism.
+        """
+        return f"{self.__name} the {self.__species} makes a typical bird sound."
