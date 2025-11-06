@@ -8,7 +8,24 @@ Username: chuey008
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
-# will need to import animals
+"""
+Importing enum.Enum to use to define a closed set of environment types to avoid string typos.
+Importing typing.List used for type hints for lists of Animal.
+"""
+from enum import Enum
+from typing import List
+from animal import Animal
+
+class EnvrionmentType(Enum):
+    """
+    Using Enumerate to help with debugging and preventing any invalid environment types.
+    """
+    AQUATIC = "aquatic"
+    SAVANNAH = "savannah"
+    DESERT = "desert"
+    TROPICAL = "tropical"
+    RAINFOREST = "rainforest"
+    ARCTIC = "arctic"
 
 class Enclosure:
     """
