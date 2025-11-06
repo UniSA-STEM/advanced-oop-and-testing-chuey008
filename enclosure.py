@@ -44,3 +44,13 @@ class Enclosure:
         if not isinstance(capacity, int) or capacity <= 0:
             raise ValueError("capacity must be a positive integer")
 
+    def __reduce_cleanliness(self, amount):
+        """
+        Private helper to reduce the cleanliness level of the enclosure.
+        """
+        self.__cleanliness = max(0, self.__cleanliness - amount)
+
+    def __compatible_with_environment(self, animal):
+        """
+        Private helper to check if the animal is compatible with the environment type in the enclosure.
+        """
