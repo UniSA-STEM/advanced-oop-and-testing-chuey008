@@ -111,15 +111,34 @@ class Enclosure:
 
     @property
     def capacity(self):
-        # capacity of the enclosure
+        # capacity of the enclosure - having only a maximum number of animals allowed as per the size
         return self.__capacity
-
-    @property
-    def animals(self):
-        # retrieving the list of animals from the import
-        return self.__animals
 
     @property
     def cleanliness(self):
         # how clean is the enclosure out of 100
         return self.__cleanliness
+
+    def add_animal(self, animal: Animal):
+        """
+        Adding an animal to an enclosure.
+        Conditions include:
+            - animal must be an Animal instance
+            - animal must not be undergoing treatment
+            - enclosure must have free capacity
+            - animal must be compatible with the enclosure environment
+        Internal checks to validate the above
+        Append the current __animal list
+        Reduce the cleanliness of the enclosure due to adding another animal to it
+        """
+        if not isinstance(animal, Animal):
+            raise TypeError("animal must be a valid Animal instance.")
+        if animal.under_treatment:
+            raise ValueError("animal undergoing treatment cannot be placed into an enclosure.")
+        if len(self.__animals) >= self.__capacity:
+            raise ValueError("enclosure is at full capacity.")
+        if not self.__compatible_with_environment(animal):
+            raise ValueError(f"{animal.species} is incompatible with {self.__environment} environment.")
+        self.__animals.append(animal)
+        self.__reduce_cleanliness(5.0)
+
