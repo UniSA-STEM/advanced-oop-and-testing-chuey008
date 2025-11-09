@@ -158,5 +158,19 @@ class Enclosure:
         """
         Returns a display of contained animals in the enclosure using strings.
         """
-        return [f"{a.name "is a -" {a.species}}" for a in self.__animals]
+        return [f"{a.name} is a - {a.species}" for a in self.__animals]
 
+    def report_status(self):
+        """
+        Returns a summary for reports and testing/demos
+        """
+        return (f"Enclosure '{self.__name}': {len(self.__animals)}/{self.__capacity} animals; "
+                f"Environment: {self.__environment.value}; Cleanliness: {self.cleanliness}%")
+
+    def clean(self):
+        """
+        Cleans the enclosure and restores the cleanliness to 100%.
+        Returns a string used by the staff methods to include staff name.
+        """
+        self.__cleanliness = 100.0
+        return f"Enclosure '{self.__name}' cleaned successfully."
