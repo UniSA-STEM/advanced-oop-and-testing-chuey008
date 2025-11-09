@@ -142,3 +142,21 @@ class Enclosure:
         self.__animals.append(animal)
         self.__reduce_cleanliness(5.0)
 
+    def remove_animal(self, animal_name):
+        """
+        Remove an animal by name and return the removed Animal object from list.
+        Uses the private list to scan and find the animal name, then removes the object.
+        If it doesn't find the animal name in the list, it prints a ValueError.
+        """
+        for a in self.__animals:
+            if a.name == animal_name:
+                self.__animals.remove(a)
+                return a
+            raise ValueError(f"animal named {animal_name} is not found in enclosure {self.__name}.")
+
+    def list_animals(self):
+        """
+        Returns a display of contained animals in the enclosure using strings.
+        """
+        return [f"{a.name "is a -" {a.species}}" for a in self.__animals]
+
