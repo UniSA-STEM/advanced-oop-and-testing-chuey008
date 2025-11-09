@@ -82,13 +82,13 @@ class Animal:
         Completes internal checks.
         """
         if not isinstance(name, str) or not name.strip():
-            raise ValueError("Name cannot be an empty string.")
+            raise ValueError("name cannot be an empty string.")
         if not isinstance(species, str) or not species.strip():
             raise ValueError("species cannot be an empty string.")
         if not isinstance(age, int) or age < 0:
-            raise ValueError("Age cannot be a negative integer")
+            raise ValueError("age cannot be a negative integer")
         if not isinstance(diet, str) or not diet.strip():
-            raise ValueError("Diet cannot be an empty string.")
+            raise ValueError("diet cannot be an empty string.")
 
     # --------------------------- Public Properties ---------------------------
     """
@@ -217,3 +217,12 @@ class Birds(Animal):
         This will override make_sound method, which shows basic polymorphism.
         """
         return f"{self.__name} the {self.__species} makes a typical bird sound."
+
+class Other(Animal):
+    def make_sound(self):
+        """
+        Other subclass of parent class that inherits from Animal - animals that don't fit the above category.
+        For simplicity.
+        This will override make_sound method, which shows basic polymorphism.
+        """
+        return f"{self.__name} the {self.__species} makes a typical 'other animal' sound."
