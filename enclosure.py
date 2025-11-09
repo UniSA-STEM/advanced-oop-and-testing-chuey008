@@ -93,3 +93,33 @@ class Enclosure:
             return True
         return False
 
+    # --------------------------- Public Properties ---------------------------
+    @property
+    def name(self):
+        # name of enclosure
+        return self.__name
+
+    @property
+    def size_sqm(self):
+        # area of enclosure in square metres
+        return self.__size_sqm
+
+    @property
+    def environment(self):
+        # environmentType for this enclosure
+        return self.__environment
+
+    @property
+    def capacity(self):
+        # capacity of the enclosure
+        return self.__capacity
+
+    @property
+    def animals(self):
+        # retrieving the list of animals from the import
+        return self.__animals
+
+    @property
+    def cleanliness(self):
+        # how clean is the enclosure out of 100
+        return self.__cleanliness
