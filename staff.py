@@ -8,7 +8,9 @@ Username: chuey008
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
-# will need to import from animal
+from typing import List
+from datetime import date
+from animal import Animal, HealthRecord
 
 class Staff:
     def __init__(self, staff_id, name, role):
@@ -69,4 +71,20 @@ class Staff:
             raise ValueError("enclosure_name cannot be an empty string.")
         if enclosure_name not in self.__assigned_enclosures:
             self.__assigned_enclosures.append(enclosure_name.strip())
+
+    # --------------------------- Role Specific Actions ---------------------------
+    def feed_animal(self, animal: Animal, food):
+        """
+        Feeding the animal is done by the zookeepers.
+        If the staff is not a zookeeper, then it will raise a PermissionError.
+        If the animal is undergoing treatment, it will print a message to prevent feeding.
+        Otherwise, it will be delegated to animl.eat(food) which will self validate
+        """
+        if self.__role != "Zookeeper":
+            raise PermissionError("only Zooekeepers are able to feed the animals.")
+        if not isinstance(animal, Animal):
+            raise TypeError("animal must be an Animal instance.")
+        if animal.under_treatment:
+            return f"{animal.name} is undergoing treatment, and should not be fed without vet approval."
+        return animal.eat(food)
 
