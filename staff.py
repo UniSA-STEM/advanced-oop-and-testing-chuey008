@@ -81,10 +81,21 @@ class Staff:
         Otherwise, it will be delegated to animl.eat(food) which will self validate
         """
         if self.__role != "Zookeeper":
-            raise PermissionError("only Zooekeepers are able to feed the animals.")
+            raise PermissionError("only Zookeepers are able to feed the animals.")
         if not isinstance(animal, Animal):
             raise TypeError("animal must be an Animal instance.")
         if animal.under_treatment:
             return f"{animal.name} is undergoing treatment, and should not be fed without vet approval."
         return animal.eat(food)
+
+    def clean_enclosure(self, enclosure):
+        """
+        Cleaning an enclosure is done by zookeepers.
+        The parameter for the enclosure is to implement a 'clean' method and 'name' property
+        Returning the staff name and enclosure status.
+        """
+        if self.__role != "Zookeeper":
+            raise PermissionError("only Zookeepers are able to clean the enclosures.")
+        result = enclosure.clean()
+        return f"{self.__name} cleaned enclosure '{enclosure.name}' - {result}."
 
