@@ -121,3 +121,18 @@ class Staff:
         record = self.__create_health_record(description.strip(), severity, (treatment_notes or "").strip())
         animal.add_health_record(record)
         return f"{self.__name} added health record for {animal.name} - severity of {severity}."
+
+    # --------------------------- Private Helpers ---------------------------
+    def __create_health_record(self, description, severity, treatment_notes) -> HealthRecord:
+        """
+        A centralised health record helper.
+        Date record and construction helps with testing and keeping the logic all in one place.
+        """
+        return HealthRecord(description=description, reported_on=date.today(), severity=severity, treatment_notes=treatment_notes)
+
+    def __str__(self):
+        """
+        Summary to help with demonstrations and testing.
+        Readable view.
+        """
+        return f"{self.__name} ({self.__role}) - animals: {self.__assigned_animals} enclosures: {self.__assigned_enclosures}"
