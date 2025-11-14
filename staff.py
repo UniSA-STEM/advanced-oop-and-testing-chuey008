@@ -99,3 +99,25 @@ class Staff:
         result = enclosure.clean()
         return f"{self.__name} cleaned enclosure '{enclosure.name}' - {result}."
 
+    def perform_health_check(self, animal: Animal, description, severity):
+        """
+        Performing a health check is done by veterinarians.
+        If the staff is not a vet, the nit will raise a PermissionError.
+        Validate that the animal is an Animal instance.
+        Description cannot be an empty string.
+        Severity is between 1 and 10.
+        HealthRecord to be stamped with today's date.
+        Adding the record to the animal which updates its under_treatment status.
+        Return the health record for the animal using vet name, animal name, and severity.
+        """
+        if self.__role != "veterinarian":
+            raise PermissionError("only veterinarians are allowed to perform health checks on the animals.")
+        if not isinstance(animal, Animal):
+            raise TypeError("animal must be an Animal instance.")
+        if not isinstance(description) or not description.strip():
+            raise ValueError("description cannot be an empty string.")
+        if not isinstance(severity) or not (1 <= severity <= 10):
+            raise ValueError("severity must be an integer between 1-10.")
+        record = self.__create_health_record(description.strip(), severity, (treatment_notes or "").strip())
+        animal.add_health_record(record)
+        return f"{self.__name} added health record for {animal.name} - severity of {severity}."
