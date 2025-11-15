@@ -16,7 +16,7 @@ from enum import Enum
 from typing import List
 from animal import Animal
 
-class EnvrionmentType(Enum):
+class EnvironmentType(Enum):
     """
     Using Enumerate to help with debugging and preventing any invalid environment types.
     """

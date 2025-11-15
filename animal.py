@@ -166,7 +166,7 @@ class Animal:
         All records will still be saved and stored after it is cleared.
         """
         self.__health_records.append(record)
-        if record.severity >= 5
+        if record.severity >= 5:
             self.__under_treatment = True
 
     def get_health_records(self):
