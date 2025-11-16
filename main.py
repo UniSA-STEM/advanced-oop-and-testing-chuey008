@@ -36,4 +36,23 @@ def demo():
     savannah = Enclosure(name="1A - Savannah", size_sqm=400.0, environment=EnvironmentType.SAVANNAH, capacity=3)
     aviary = Enclosure(name="1A - Aviary", size_sqm=60.0, environment=EnvironmentType.TROPICAL, capacity=6)
 
+    # add animals into their compatible enclosures to demo validation and cleanliness of change
+    savannah.add_animal(ellie)
+    aviary.add_animal(peta)
+    print(savannah.report_status())
+    print(aviary.report_status())
+
+    # create staff with roles
+    rob = Staff(staff_id="K001", name="Rob", role="zookeeper")
+    dr_kate = Staff(staff_id="V001", name="Dr Kate", role="veterinarian")
+
+    # assignments - storing a simple reference, name of staff for this model
+    rob.assign_animal(ellie)
+    rob.assign_enclosure(savannah.name)
+    dr_kate.assign_animal(ellie)
+
+    # actions: feeding and cleaning should be done by the zookeeper Rob
+    print(rob.feed_animal(ellie, "grass"))
+    print(rob.clean_enclosure(savannah))
+
 
