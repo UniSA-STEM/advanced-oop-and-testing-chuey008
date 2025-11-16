@@ -210,10 +210,10 @@ class Reptile(Animal):
         """
         return f"{self.__name} the {self.__species} makes a typical reptile sound."
 
-class Birds(Animal):
+class Bird(Animal):
     def make_sound(self):
         """
-        Birds subclass of parent class that inherits from Animal.
+        Bird subclass of parent class that inherits from Animal.
         This will override make_sound method, which shows basic polymorphism.
         """
         return f"{self.__name} the {self.__species} makes a typical bird sound."
