@@ -51,8 +51,23 @@ def demo():
     rob.assign_enclosure(savannah.name)
     dr_kate.assign_animal(ellie)
 
-    # actions: feeding and cleaning should be done by the zookeeper Rob
+    # actions - feeding and cleaning should be done by the zookeeper Rob
     print(rob.feed_animal(ellie, "grass"))
     print(rob.clean_enclosure(savannah))
+
+    # vet check - low severity record - does not make as undergoing treatment using below the threshold
+    print(dr_kate.perform_health_check(ellie, "a small cut on the front right leg", severity=3, treatment_notes="Clean and apply ointment."))
+    print(ellie.get_health_records())  # prints out a list of HealthRecord objects
+
+    # vet check - high severity record - should set peta undergoing treatment
+    print(dr_kate.perform_health_check(peta, "broken wing", severity=8, ))
+
+    # attempt to move an animal undergoing treatment - this should raise an error or be prevented altogether
+    try:
+        aviary2 = Enclosure(name="2A - Aviary", size_sqm=40.0, environment=EnvironmentType.TROPICAL, capacity=2)
+        aviary2.add_animal(peta)  # peta is undergoing treatment -> ValueError expected
+    except Exception as e:
+        print("Error - unable to move animal undergoing treatment:", e)
+
 
 
