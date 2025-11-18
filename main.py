@@ -29,8 +29,11 @@ def demo():
     # demonstrate polymorphism through each subclass, which will override make_sound
     print(ellie)  # uses Animal.__str__ which read from the public properties
     print(peta.make_sound())  # makes a bird specific sound
+    print()
     print(tilly.sleep(6))  # behaviour method with a validation
+    print()
     print(fred.make_sound("erk erk erk"))  # overrides the make_sound with a more specific sound for a tree frog
+    print(fred.make_sound())  # if there is not a custom sound the animal makes
 
     # create an enclosure with explicit EnvironmentTypes to avoid string typos
     savannah = Enclosure("1A - Savannah", 400.0, EnvironmentType.SAVANNAH, 3)
@@ -38,13 +41,16 @@ def demo():
 
     # add animals into their compatible enclosures to demo validation and cleanliness of change
     savannah.add_animal(ellie)
+    print()
     tropical_dome.add_animal(peta)
     print(savannah.report_status())
+    print()
     print(tropical_dome.report_status())
+    print()
 
     # create staff with roles
-    zookeeper = Staff("K001", "Rob", "zookeeper")
-    vet = Staff("V001", "Dr Kate", "veterinarian")
+    zookeeper = Staff("K001", "Rob", "Zookeeper")
+    vet = Staff("V001", "Dr Kate", "Veterinarian")
 
     # assignments - storing a simple reference, name of staff for this model
     zookeeper.assign_animal(ellie)
@@ -53,15 +59,17 @@ def demo():
 
     # actions - feeding and cleaning should be done by the zookeeper Rob
     print(zookeeper.feed_animal(ellie, "grass"))
+    print()
     print(zookeeper.clean_enclosure(savannah))
+    print()
 
     # vet check - low severity record - does not make as undergoing treatment using below the threshold
     print(vet.perform_health_check(ellie, "a small cut on the front right leg", 3, "Clean and apply ointment."))
-
     # check health records have been updated
     print(ellie.get_health_records())
 
     # vet check - high severity record - should set peta undergoing treatment
+    print()
     print(vet.perform_health_check(peta, "broken wing", 8, "Splint applied on wing" ))
 
     # attempt to move an animal undergoing treatment - this should raise an error or be prevented altogether
@@ -70,17 +78,20 @@ def demo():
         tropical_dome2.add_animal(peta)  # peta is undergoing treatment -> ValueError expected
     except Exception as e:
         print("Error - unable to move animal undergoing treatment:", e)
+    print()
 
     # demonstrate removal of an animal from enclosure and return object usage
     removed = savannah.remove_animal("Ellie")
     print(f"Removed {removed.name} from {savannah.name}")
     print(savannah.report_status())
+    print()
 
     # final printed reports to summarise the zoo state
     print("Final reports:")
     print(ellie)
     print(peta)
-    print("Health records for Peta:", peta.get_health_records())
+    print("Health records for Peta:")
+    print(peta.get_health_records())
 
 if __name__ == "__main__":
     demo()

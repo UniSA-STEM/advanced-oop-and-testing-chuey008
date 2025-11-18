@@ -57,7 +57,9 @@ class HealthRecord:
 
     def __repr__(self):
         # represents a string for debugging and tests
-        return f"HealthRecord({self.__reported_on.isoformat()},sev={self.__severity}, desc={self.__description})"
+        return (f"Date = {self.__reported_on.isoformat()}\n "
+                f"Severity = {self.__severity}\n"
+                f" Description = {self.__description}")
 
 class Animal:
     def __init__(self, name, species, age, diet):
@@ -137,7 +139,7 @@ class Animal:
         """
         if not isinstance(food, str) or not food.strip():
             raise ValueError("Food cannot be an empty string.")
-        return f"{self.__name} eats {food.strip()} - diet contains: {self.__diet}"
+        return f"{self.__name} eats {food.strip()} - diet: {self.__diet}"
 
     def sleep(self, hours: int = 8):
         """
@@ -191,38 +193,66 @@ class Animal:
         return (f"{self.__name} is part of the {self.__species} species\n"
                 f"Age: {self.__age}\n"
                 f"Diet: {self.__diet}\n"
-                f"Health: {status}")
+                f"Health: {status}\n")
 
 # --------------------------- Animal Subclasses ---------------------------
 class Mammal(Animal):
+    def __init__(self, name, species, age, diet):
+        """
+        Subclasses need to inherit properly from parent class Animal, using super().__init__() to call HealthRecords.
+        """
+        super().__init__(name,species, age, diet)
+
     def make_sound(self):
         """
         Mammal subclass of parent class that inherits from Animal.
         This will override make_sound method, which shows basic polymorphism.
         """
-        return f"{self.__name} the {self.__species} makes a typical mammal sound."
+        return f"{self.name} the {self.species} makes a typical mammal sound."
 
 class Reptile(Animal):
+    def __init__(self, name, species, age, diet):
+        """
+        Subclasses need to inherit properly from parent class Animal, using super().__init__() to call HealthRecords.
+        """
+        super().__init__(name,species, age, diet)
+
     def make_sound(self):
         """
         Reptile subclass of parent class that inherits from Animal.
         This will override make_sound method, which shows basic polymorphism.
         """
-        return f"{self.__name} the {self.__species} makes a typical reptile sound."
+        return f"{self.name} the {self.species} makes a typical reptile sound."
 
 class Bird(Animal):
+    def __init__(self, name, species, age, diet):
+        """
+        Subclasses need to inherit properly from parent class Animal, using super().__init__() to call HealthRecords.
+        """
+        super().__init__(name,species, age, diet)
+
     def make_sound(self):
         """
         Bird subclass of parent class that inherits from Animal.
         This will override make_sound method, which shows basic polymorphism.
         """
-        return f"{self.__name} the {self.__species} makes a typical bird sound."
+        return f"{self.name} the {self.species} makes a typical bird sound."
 
 class Other(Animal):
-    def make_sound(self):
+    def __init__(self, name, species, age, diet):
+        """
+        Subclasses need to inherit properly from parent class Animal, using super().__init__() to call HealthRecords.
+        """
+        super().__init__(name,species, age, diet)
+
+    def make_sound(self, custom_sound=None):
         """
         Other subclass of parent class that inherits from Animal - animals that don't fit the above category.
         For simplicity.
         This will override make_sound method, which shows basic polymorphism.
+        Create a custom sound for the animal.
         """
-        return f"{self.__name} the {self.__species} makes a typical 'other animal' sound."
+        if custom_sound:
+            return f"{self.name} the {self.species} makes a {custom_sound} sound."
+        else:
+            return f"{self.name} the {self.species} makes a typical {self.species} sound."

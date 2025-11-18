@@ -174,4 +174,4 @@ class Enclosure:
         Returns a string used by the staff methods to include staff name.
         """
         self.__cleanliness = 100.0
-        return f"Enclosure: '{self.__name}' cleaned successfully."
+        return f"Enclosure: '{self.__name}' cleaned successfully"
