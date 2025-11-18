@@ -40,12 +40,13 @@ class Enclosure:
     All are private attributes to protect any accidental internal changes
     """
     def __init__(self, name, size_sqm, environment, capacity):
+        self.__validate_init(name, size_sqm, environment, capacity)
         self.__name = name
         self.__size_sqm = size_sqm
         self.__environment = environment
         self.__capacity = capacity
         self.__animals: List[Animal]=[]
-        self.__cleanliness = 100  # start fully clean
+        self.__cleanliness = 100  # starts fully clean
 
     # --------------------------- Private Helpers ---------------------------
     def __validate_init(self, name, size_sqm, environment, capacity):
@@ -55,7 +56,7 @@ class Enclosure:
         """
         if not isinstance(name, str) or not name.strip():
             raise ValueError("name cannot be an empty string.")
-        if not isinstance(size_sqm, int) or size_sqm < 0:
+        if not isinstance(size_sqm, (int, float)) or size_sqm <= 0:
             raise ValueError("size_sqm must be a positive integer")
         if not isinstance(environment, EnvironmentType):
             raise TypeError("environment must be a valid EnvironmentType")
@@ -74,20 +75,20 @@ class Enclosure:
         Method encapsulates the mapping of animal species to environments.
         Substring based, for additional flexibility - e.g. specific species like "brown bear" and "polar bear"
         """
-        a_s = animal.species.lower()
+        a_species = animal.species.lower()
         env = self.__environment
         if env == EnvironmentType.AQUATIC:
-            return any(i in a_s for i in ("dolphin", "seal", "penguin", "fish", "sea otter", "turtle"))
+            return any(i in a_species for i in ("dolphin", "seal", "penguin", "fish", "sea otter", "turtle"))
         if env == EnvironmentType.SAVANNAH:
-            return any(i in a_s for i in ("giraffe", "elephant", "zebra", "ostrich", "red kangaroo", "meerkat"))
+            return any(i in a_species for i in ("giraffe", "elephant", "zebra", "ostrich", "red kangaroo", "meerkat"))
         if env == EnvironmentType.DESERT:
-            return any(i in a_s for i in ("camel", "scorpion", "dingo", "bearded dragon", "hawk", "cobra"))
+            return any(i in a_species for i in ("camel", "scorpion", "dingo", "bearded dragon", "hawk", "cobra"))
         if env == EnvironmentType.TROPICAL:
-            return any(i in a_s for i in ("lemur", "green anaconda", "parrot", "gecko", "capybara", "sloth"))
+            return any(i in a_species for i in ("lemur", "green anaconda", "parrot", "gecko", "capybara", "sloth"))
         if env == EnvironmentType.RAINFOREST:
-            return any(i in a_s for i in ("tree frog", "toucan", "spider monkey", "harpy eagle", "tiger", "gorilla"))
+            return any(i in a_species for i in ("tree frog", "toucan", "spider monkey", "harpy eagle", "tiger", "gorilla"))
         if env == EnvironmentType.ARCTIC:
-            return any(i in a_s for i in ("polar bear", "arctic fox", "snowy owls", "walrus", "seal", "puffin"))
+            return any(i in a_species for i in ("polar bear", "arctic fox", "snowy owls", "walrus", "seal", "puffin"))
         if env == EnvironmentType.TEMPERATE:
             # temperate accepts generalists type animal species
             return True
@@ -138,7 +139,7 @@ class Enclosure:
         if len(self.__animals) >= self.__capacity:
             raise ValueError("enclosure is at full capacity.")
         if not self.__compatible_with_environment(animal):
-            raise ValueError(f"{animal.species} is incompatible with {self.__environment} environment.")
+            raise ValueError(f"{animal.species} is incompatible with {self.__environment.value} environment.")
         self.__animals.append(animal)
         self.__reduce_cleanliness(5.0)
 
@@ -152,7 +153,7 @@ class Enclosure:
             if a.name == animal_name:
                 self.__animals.remove(a)
                 return a
-            raise ValueError(f"animal named {animal_name} is not found in enclosure {self.__name}.")
+            raise ValueError(f"Animal named {animal_name} is not found in enclosure.")
 
     def list_animals(self):
         """
@@ -173,4 +174,4 @@ class Enclosure:
         Returns a string used by the staff methods to include staff name.
         """
         self.__cleanliness = 100.0
-        return f"Enclosure '{self.__name}' cleaned successfully."
+        return f"Enclosure: '{self.__name}' cleaned successfully."

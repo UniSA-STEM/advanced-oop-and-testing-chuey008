@@ -33,41 +33,55 @@ def demo():
     print(fred.make_sound("erk erk erk"))  # overrides the make_sound with a more specific sound for a tree frog
 
     # create an enclosure with explicit EnvironmentTypes to avoid string typos
-    savannah = Enclosure(name="1A - Savannah", size_sqm=400.0, environment=EnvironmentType.SAVANNAH, capacity=3)
-    aviary = Enclosure(name="1A - Aviary", size_sqm=60.0, environment=EnvironmentType.TROPICAL, capacity=6)
+    savannah = Enclosure("1A - Savannah", 400.0, EnvironmentType.SAVANNAH, 3)
+    tropical_dome = Enclosure("1A - Tropical Dome", 60.0, EnvironmentType.TROPICAL, 6)
 
     # add animals into their compatible enclosures to demo validation and cleanliness of change
     savannah.add_animal(ellie)
-    aviary.add_animal(peta)
+    tropical_dome.add_animal(peta)
     print(savannah.report_status())
-    print(aviary.report_status())
+    print(tropical_dome.report_status())
 
     # create staff with roles
-    rob = Staff(staff_id="K001", name="Rob", role="zookeeper")
-    dr_kate = Staff(staff_id="V001", name="Dr Kate", role="veterinarian")
+    zookeeper = Staff("K001", "Rob", "zookeeper")
+    vet = Staff("V001", "Dr Kate", "veterinarian")
 
     # assignments - storing a simple reference, name of staff for this model
-    rob.assign_animal(ellie)
-    rob.assign_enclosure(savannah.name)
-    dr_kate.assign_animal(ellie)
+    zookeeper.assign_animal(ellie)
+    zookeeper.assign_enclosure(savannah.name)
+    vet.assign_animal(ellie)
 
     # actions - feeding and cleaning should be done by the zookeeper Rob
-    print(rob.feed_animal(ellie, "grass"))
-    print(rob.clean_enclosure(savannah))
+    print(zookeeper.feed_animal(ellie, "grass"))
+    print(zookeeper.clean_enclosure(savannah))
 
     # vet check - low severity record - does not make as undergoing treatment using below the threshold
-    print(dr_kate.perform_health_check(ellie, "a small cut on the front right leg", severity=3, treatment_notes="Clean and apply ointment."))
-    print(ellie.get_health_records())  # prints out a list of HealthRecord objects
+    print(vet.perform_health_check(ellie, "a small cut on the front right leg", 3, "Clean and apply ointment."))
+
+    # check health records have been updated
+    print(ellie.get_health_records())
 
     # vet check - high severity record - should set peta undergoing treatment
-    print(dr_kate.perform_health_check(peta, "broken wing", severity=8, ))
+    print(vet.perform_health_check(peta, "broken wing", 8, "Splint applied on wing" ))
 
     # attempt to move an animal undergoing treatment - this should raise an error or be prevented altogether
     try:
-        aviary2 = Enclosure(name="2A - Aviary", size_sqm=40.0, environment=EnvironmentType.TROPICAL, capacity=2)
-        aviary2.add_animal(peta)  # peta is undergoing treatment -> ValueError expected
+        tropical_dome2 = Enclosure("2A - Tropical Dome 2", 40.0, EnvironmentType.TROPICAL, 2)
+        tropical_dome2.add_animal(peta)  # peta is undergoing treatment -> ValueError expected
     except Exception as e:
         print("Error - unable to move animal undergoing treatment:", e)
 
+    # demonstrate removal of an animal from enclosure and return object usage
+    removed = savannah.remove_animal("Ellie")
+    print(f"Removed {removed.name} from {savannah.name}")
+    print(savannah.report_status())
 
+    # final printed reports to summarise the zoo state
+    print("Final reports:")
+    print(ellie)
+    print(peta)
+    print("Health records for Peta:", peta.get_health_records())
+
+if __name__ == "__main__":
+    demo()
 

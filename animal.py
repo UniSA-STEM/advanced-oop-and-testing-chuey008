@@ -127,7 +127,7 @@ class Animal:
         Subclasses would be able to override this method
         Keeping it public to let other components call it without accessing internal state
         """
-        return f"{self.__name} th {self.__species} makes a sound"
+        return f"{self.__name} the {self.__species} makes a sound"
 
     def eat(self, food: str):
         """
@@ -188,9 +188,9 @@ class Animal:
         A summary of the animal on their health for testing and showcasing output.
         """
         status = "Undergoing treatment" if self.__under_treatment else "Healthy"
-        return (f"{self.__name} is part of {self.__species}"
-                f"Age: {self.__age}"
-                f"Diet: {self.__diet}"
+        return (f"{self.__name} is part of the {self.__species} species\n"
+                f"Age: {self.__age}\n"
+                f"Diet: {self.__diet}\n"
                 f"Health: {status}")
 
 # --------------------------- Animal Subclasses ---------------------------

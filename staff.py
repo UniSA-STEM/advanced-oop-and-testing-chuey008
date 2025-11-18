@@ -23,7 +23,10 @@ class Staff:
         """
         self.__validate_init(staff_id, name, role)
         self.__staff_id = staff_id
+        self.__name = name
         self.__role = role
+        self.__assigned_animals = []
+        self.__assigned_enclosures = []
 
     def __validate_init(self, staff_id, name, role):
         """
@@ -34,7 +37,7 @@ class Staff:
         if not isinstance(name, str) or not name.strip():
             raise ValueError("Name cannot be an empty string.")
         if role not in ("Veterinarian", "Zookeeper"):
-            raise ValueError("Role must be either 'Veterinarian' or 'Zookeeper'.")
+            raise ValueError("Role must be 'Veterinarian' or 'Zookeeper'.")
 
     # --------------------------- Public Properties ---------------------------
     # using @property decorator to transform a method into a getter
@@ -99,7 +102,7 @@ class Staff:
         result = enclosure.clean()
         return f"{self.__name} cleaned enclosure '{enclosure.name}' - {result}."
 
-    def perform_health_check(self, animal: Animal, description, severity):
+    def perform_health_check(self, animal: Animal, description, severity, treatment_notes=""):
         """
         Performing a health check is done by veterinarians.
         If the staff is not a vet, the nit will raise a PermissionError.
@@ -110,29 +113,29 @@ class Staff:
         Adding the record to the animal which updates its under_treatment status.
         Return the health record for the animal using vet name, animal name, and severity.
         """
-        if self.__role != "veterinarian":
-            raise PermissionError("only veterinarians are allowed to perform health checks on the animals.")
+        if self.__role != "Veterinarian":
+            raise PermissionError("Only Veterinarians are allowed to perform health checks on the animals.")
         if not isinstance(animal, Animal):
             raise TypeError("animal must be an Animal instance.")
-        if not isinstance(description) or not description.strip():
+        if not isinstance(description, str) or not description.strip():
             raise ValueError("description cannot be an empty string.")
-        if not isinstance(severity) or not (1 <= severity <= 10):
+        if not isinstance(severity, int) or not (1 <= severity <= 10):
             raise ValueError("severity must be an integer between 1-10.")
-        record = self.__create_health_record(description.strip(), severity, (treatment_notes or "").strip())
+        record = self.__create_health_record(description.strip(), severity, treatment_notes.strip())
         animal.add_health_record(record)
-        return f"{self.__name} added health record for {animal.name} - severity of {severity}."
+        return f"{self.__name} added health record to {animal.name} with severity of {severity}."
 
     # --------------------------- Private Helpers ---------------------------
-    def __create_health_record(self, description, severity, treatment_notes) -> HealthRecord:
+    def __create_health_record(self, description, severity, treatment_notes):
         """
         A centralised health record helper.
         Date record and construction helps with testing and keeping the logic all in one place.
         """
-        return HealthRecord(description=description, reported_on=date.today(), severity=severity, treatment_notes=treatment_notes)
+        return HealthRecord(description, date.today(), severity, treatment_notes)
 
     def __str__(self):
         """
         Summary to help with demonstrations and testing.
         Readable view.
         """
-        return f"{self.__name} ({self.__role}) - animals: {self.__assigned_animals} enclosures: {self.__assigned_enclosures}"
+        return f"{self.__name} ({self.__role}) - Animals: {self.__assigned_animals} | Enclosures: {self.__assigned_enclosures}"
